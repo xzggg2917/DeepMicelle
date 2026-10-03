@@ -1,0 +1,68 @@
+{
+  "dl_percent": [
+    {
+      "held_fam": "OTHER",
+      "n_test": 138,
+      "R2": -1.175,
+      "MAE": 41.264
+    },
+    {
+      "held_fam": "PCL",
+      "n_test": 25,
+      "R2": 0.237,
+      "MAE": 4.584
+    },
+    {
+      "held_fam": "PLA",
+      "n_test": 26,
+      "R2": -0.482,
+      "MAE": 8.799
+    },
+    {
+      "held_fam": "PLGA",
+      "n_test": 37,
+      "R2": -3.552,
+      "MAE": 14.857
+    }
+  ],
+  "size_drug_nm": [
+    {
+      "held_fam": "OTHER",
+      "n_test": 89,
+      "R2": -0.224,
+      "MAE": 70.516
+    },
+    {
+      "held_fam": "PCL",
+      "n_test": 78,
+      "R2": -7.741,
+      "MAE": 63.116
+    },
+    {
+      "held_fam": "PLA",
+      "n_test": 13,
+      "R2": -2.134,
+      "MAE": 73.479
+    }
+  ],
+  "log_cmc_mg_l": [
+    {
+      "held_fam": "OTHER",
+      "n_test": 63,
+      "R2": -0.8,
+      "MAE": 0.563
+    },
+    {
+      "held_fam": "PCL",
+      "n_test": 37,
+      "R2": 0.297,
+      "MAE": 0.795
+    },
+    {
+      "held_fam": "PLA",
+      "n_test": 9,
+      "R2": -0.159,
+      "MAE": 0.956
+    }
+  ]
+}
