@@ -25,11 +25,22 @@ root.configure(background=BG)
 E = {}
 
 
-side = tk.Frame(root, background=CARD, padx=14, pady=10, width=300)
-side.pack(side='left', fill='y', padx=10, pady=10)
-side.pack_propagate(False)
+root.grid_rowconfigure(0, weight=1)
+root.grid_columnconfigure(1, weight=1)
+side_wrap = tk.Frame(root, background=CARD, width=320)
+side_wrap.grid(row=0, column=0, sticky='ns', padx=10, pady=10)
+side_wrap.grid_propagate(False)
+side_canvas = tk.Canvas(side_wrap, background=CARD, highlightthickness=0, width=300)
+side_bar = tk.Scrollbar(side_wrap, orient='vertical', command=side_canvas.yview)
+side_canvas.configure(yscrollcommand=side_bar.set)
+side_bar.pack(side='right', fill='y')
+side_canvas.pack(side='left', fill='both', expand=True)
+side = tk.Frame(side_canvas, background=CARD, padx=14, pady=10)
+side_canvas.create_window((0, 0), window=side, anchor='nw')
+side.bind('<Configure>', lambda _e: side_canvas.configure(scrollregion=side_canvas.bbox('all')))
+side_canvas.bind_all('<MouseWheel>', lambda e: side_canvas.yview_scroll(-1 * (e.delta // 120), 'units'))
 main = tk.Frame(root, background=BG, padx=14, pady=10)
-main.pack(side='right', fill='both', expand=True, padx=(0, 10), pady=10)
+main.grid(row=0, column=1, sticky='nsew', padx=(0, 10), pady=10)
 
 tk.Label(side, text='输入', font=('Microsoft YaHei', 14, 'bold'),
          background=CARD, foreground=ACC).pack(anchor='w', pady=(0, 8))
