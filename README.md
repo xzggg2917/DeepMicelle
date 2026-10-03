@@ -1,4 +1,4 @@
-# DeepMicelle
+﻿# DeepMicelle
 
 胶束处方性质预测系统。用基团贡献法得到的 Flory-Huggins 参数 (χ) 作为物理先验特征，
 结合处方/工艺参数预测载药胶束的关键性能指标，并提供 Streamlit 交互界面。
