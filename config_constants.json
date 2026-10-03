@@ -1,0 +1,1 @@
+{"block_delta": {"PCL": 19.2, "PLA": 20.2, "PLGA": 21.0}, "drug_literature": {"Doxorubicin": [543.52, 1.27, 206.0], "Methotrexate": [454.44, 1.85, 211.0], "Paclitaxel": [853.91, 3.0, 221.0]}, "note": "Literature physical constants, not experimental data", "water_delta": 47.8}
