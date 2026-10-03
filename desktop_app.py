@@ -65,9 +65,9 @@ entry('tmed')
 lab('嵌段家族')
 combo('fam', ['PCL', 'PLA', 'PLGA'])
 lab('亲水Mw (Da)')
-entry('fphil')
+slider('fphil', '亲水Mw (Da)', 1000, 12000, 5000)
 lab('疏水Mw (Da)')
-entry('fphob')
+slider('fphob', '疏水Mw (Da)', 500, 25000, 5000)
 lab('疏/亲比')
 entry('fratio')
 lab('制备方法')
@@ -81,7 +81,7 @@ combo('drug', ['Doxorubicin', 'Paclitaxel', 'Methotrexate', '其它'])
 lab('药物 Mw (Da)')
 entry('Mw')
 lab('LogP')
-entry('LogP')
+slider('LogP', 'LogP', -2, 6, 2.5)
 lab('TPSA')
 entry('TPSA')
 
@@ -110,6 +110,8 @@ flag_line.pack(anchor='w')
 
 def need(key):
     try:
+        if key + '_entry' in E:
+            return float(E[key + '_entry'].get())
         return float(E[key].get())
     except Exception:
         return None
@@ -149,6 +151,35 @@ def run():
         flags_all += r['flags']
     seen = list(dict.fromkeys(flags_all))
     flag_line.config(text='\n'.join('提示: ' + f for f in seen))
+
+
+
+
+def slider(key, label, lo, hi, default):
+    tk.Label(side, text=label, background=CARD, foreground='#9AA4B2',
+             font=('Microsoft YaHei', 9)).pack(anchor='w', pady=(6, 0))
+    v = tk.DoubleVar(value=default)
+    box = tk.Frame(side, background=CARD)
+    box.pack(anchor='w', fill='x')
+    sc = tk.Scale(box, variable=v, from_=lo, to=hi, orient='horizontal', length=170,
+                  background=CARD, foreground=TXT, highlightthickness=0, troughcolor=INBG)
+    sc.pack(side='left')
+    ent = tk.Entry(box, width=9, background=INBG, foreground=TXT, insertbackground=TXT, relief='flat')
+    ent.insert(0, str(default))
+    ent.pack(side='left', padx=6)
+    E[key] = None  # placeholder replaced below
+    E[key + '_scale'] = v
+    E[key + '_entry'] = ent
+    def _s2e(*_):
+        ent.delete(0, 'end'); ent.insert(0, f"{v.get():.1f}")
+    def _e2s(_):
+        try:
+            v.set(float(ent.get()))
+        except Exception:
+            pass
+    v.trace_add('write', _s2e)
+    ent.bind('<Return>', _e2s)
+    ent.bind('<FocusOut>', _e2s)
 
 
 tk.Button(side, text='预 测', font=('Microsoft YaHei', 12, 'bold'),
