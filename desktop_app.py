@@ -19,7 +19,7 @@ WATER = CFG['water_delta']
 BG, CARD, TXT, ACC, INBG = '#0E1117', '#161B22', '#F0F6FC', '#58A6FF', '#21262D'
 
 root = tk.Tk()
-root.title('DeepMicelle v6')
+root.title('DeepMicelle v6.3')
 root.geometry('1020x700')
 root.configure(background=BG)
 E = {}
@@ -88,7 +88,7 @@ entry('TPSA')
 
 tk.Label(main, text='DeepMicelle 预测输出', font=('Microsoft YaHei', 16, 'bold'),
          background=BG, foreground=TXT).pack(anchor='w', pady=(0, 4))
-tk.Label(main, text='chi_dc<2 视为相容可成胶；EE 仅趋势参考',
+tk.Label(main, text='v6.3 · chi_dc<2 视为相容可成胶；EE 仅趋势参考',
          background=BG, foreground='#9AA4B2').pack(anchor='w', pady=(0, 10))
 
 cards = {}
@@ -144,12 +144,17 @@ def run():
     chi_line.config(text=f"chi_dc={cdc:.2f}  chi_cw={ccw:.2f}  Kam={row['Kam']:.2e}  "
                          + ('可成胶' if cdc < 2 else '域外：可能不成胶'))
     flags_all = []
-    for t in ['EE', 'DL', 'Size', 'logCMC']:
-        r = P.predict(t, row)
-        val, det = cards[t]
-        val.config(text=str(r['pred']))
-        det.config(text=f"90%区间 {r['interval_90']}   MAE {r['MAE_cv']}")
-        flags_all += r['flags']
+    try:
+        for t in ['EE', 'DL', 'Size', 'logCMC']:
+            r = P.predict(t, row)
+            val, det = cards[t]
+            val.config(text=str(r['pred']))
+            det.config(text=f"90%区间 {r['interval_90']}   MAE {r['MAE_cv']}")
+            flags_all += r['flags']
+    except Exception as ex:
+        import traceback
+        messagebox.showerror('预测失败', f'{ex}\n\n{traceback.format_exc()[-800:]}')
+        return
     seen = list(dict.fromkeys(flags_all))
     flag_line.config(text='\n'.join('提示: ' + f for f in seen))
 
