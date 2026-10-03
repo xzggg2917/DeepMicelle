@@ -24,6 +24,32 @@ root.geometry('1020x700')
 root.configure(background=BG)
 E = {}
 
+def slider(key, label, lo, hi, default):
+    tk.Label(side, text=label, background=CARD, foreground='#9AA4B2',
+             font=('Microsoft YaHei', 9)).pack(anchor='w', pady=(6, 0))
+    v = tk.DoubleVar(value=default)
+    box = tk.Frame(side, background=CARD)
+    box.pack(anchor='w', fill='x')
+    sc = tk.Scale(box, variable=v, from_=lo, to=hi, orient='horizontal', length=170,
+                  background=CARD, foreground=TXT, highlightthickness=0, troughcolor=INBG)
+    sc.pack(side='left')
+    ent = tk.Entry(box, width=9, background=INBG, foreground=TXT, insertbackground=TXT, relief='flat')
+    ent.insert(0, str(default))
+    ent.pack(side='left', padx=6)
+    E[key + '_scale'] = v
+    E[key + '_entry'] = ent
+    def _s2e(*_):
+        ent.delete(0, 'end')
+        ent.insert(0, f'{v.get():.1f}')
+    def _e2s(_):
+        try:
+            v.set(float(ent.get()))
+        except Exception:
+            pass
+    v.trace_add('write', _s2e)
+    ent.bind('<Return>', _e2s)
+    ent.bind('<FocusOut>', _e2s)
+
 side = tk.Frame(root, background=CARD, padx=14, pady=10, width=300)
 side.pack(side='left', fill='y', padx=10, pady=10)
 side.pack_propagate(False)
@@ -155,7 +181,6 @@ def run():
 
 
 
-def slider(key, label, lo, hi, default):
     tk.Label(side, text=label, background=CARD, foreground='#9AA4B2',
              font=('Microsoft YaHei', 9)).pack(anchor='w', pady=(6, 0))
     v = tk.DoubleVar(value=default)
