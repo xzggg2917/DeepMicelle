@@ -32,15 +32,6 @@ streamlit run app.py
 
 界面按“介质条件 → 处方 → 水化参数 → 药物”四步录入，输出预测值及 90% 区间。
 
-## 程序化调用
-
-```python
-import predict
-predict.predict('Size', {'fratio': 0.44, 'fphil': 2000.0, 'fphob': 872.1,
-                         'MolWt': 543.52, 'LogP': 1.27, 'TPSA': 206.0,
-                         'preparation_method': 'film_hydration', 'fam': 'PCL',
-                         'chi_dc': 3.62, 'chi_cw': 33.34, 'Kam': 1.5e-09})
-```
 
 ## 目录
 
